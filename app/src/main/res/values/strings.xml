@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FirebaseAuthentication</string>
+    <string name="register">Register User</string>
+    <string name="alreadyReg">Already Registered?  Sign in Here.</string>
+</resources>
