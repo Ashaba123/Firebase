@@ -1,8 +1,5 @@
 package com.learn.firebaseauthentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,28 +11,30 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG ="firebase" ;
-    private Button registerBtn;
+    private static final String TAG ="firebaselogin" ;
+    private Button btnSignIn;
     private EditText emailEt;
     private EditText passwordEt;
-    private TextView signIn;
-
-
+    private TextView signUp;
     private ProgressBar progressBar;
+
     private FirebaseAuth firebaseAuth;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         IntitUI();
 
         //check if user is logged In
@@ -45,48 +44,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
 
         }
-
     }
 
     private void IntitUI() {
-       firebaseAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progress_circular);
-        registerBtn = findViewById(R.id.btnRegister);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        btnSignIn = findViewById(R.id.btnSignIn);
         emailEt= findViewById(R.id.email);
         passwordEt = findViewById(R.id.password);
-        signIn = findViewById(R.id.textViewSignin);
+        signUp = findViewById(R.id.textViewSignUp);
+        progressBar =findViewById(R.id.progressBar_login);
 
-        registerBtn.setOnClickListener(this);
-        signIn.setOnClickListener(this);
+        btnSignIn.setOnClickListener(this);
+        signUp.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == registerBtn){
-            registerUser();
+        if (v == btnSignIn){
+            userLogin();
         }
 
-        if(v== signIn){
-            //open login activity
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+        if(v== signUp){
+            //close this activity
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
 
+        }
     }
 
-    private void registerUser() {
+    private void userLogin() {
         String email = emailEt.getText().toString().trim();
         String password = passwordEt.getText().toString().trim();
+
 
         if(TextUtils.isEmpty(email)){
             //email is empty
             Toast.makeText(this,"Enter email",Toast.LENGTH_SHORT).show();
+
             //stop executing futher
             return;
         }
         if(TextUtils.isEmpty(password)){
             Toast.makeText(this,"Enter password",Toast.LENGTH_SHORT).show();
+
             return;
         }
+
         //Email and Passowrd Validations;
         if (passwordEt.getText().toString().length() < 6) {
             passwordEt.setError("password minimum contain 6 character");
@@ -111,48 +115,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-     /*   if (!emailEt.equals("") &&
-                passwordEt.getText().toString().length() >= 6 &&
-                !passwordEt.getText().toString().trim().equals("")
-                && android.util.Patterns.EMAIL_ADDRESS.matcher(emailEt.getText().toString().trim()).matches()) {
-            // do  your action
-        }*/
+        //loading
+          progressBar.setVisibility(View.VISIBLE);
 
-
-
-        //All validations are okay ,now proceed,
-        // use a progress bar to wait for internet to do its thing
-        progressBar.setVisibility(View.VISIBLE);
-
-
-
-        //firebase adds user
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        //sign in
+        firebaseAuth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         progressBar.setVisibility(View.INVISIBLE);
 
-                        if (task.isSuccessful()) {
-                            //user registered
-                            //open profile page
-                            Toast.makeText(MainActivity.this, "Registered Succesfully", Toast.LENGTH_SHORT).show();
-                            Log.w(TAG, "createUserWithEmail:success", task.getException());
+                        if(task.isSuccessful()){
+                            //start profile activity
+                            finish();
+                            startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                            Log.w(TAG, "Login:success", task.getException());
 
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-
-
-                        } else {
-
-                            Toast.makeText(MainActivity.this, "Failed to Register, Try again", Toast.LENGTH_SHORT).show();
-                            Log.w(TAG, "createUserWithEmail:success", task.getException());
+                        }else{
+                            Log.w(TAG, "Login:Failed", task.getException());
                         }
                     }
-
                 });
 
+
     }
-
-
 }

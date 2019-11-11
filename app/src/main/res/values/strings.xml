@@ -2,4 +2,16 @@
     <string name="app_name">FirebaseAuthentication</string>
     <string name="register">Register User</string>
     <string name="alreadyReg">Already Registered?  Sign in Here.</string>
+    <string name="signup">Not have an Account?  Sign Up Here</string>
+    <string name="userlogin">User Login</string>
+    <string name="user_register">User Registration</string>
+    <string name="email">Email</string>
+    <string name="welcome">Welcome %1$s.</string>
+    <string name="logout">Log Out</string>
+    <string name="login">Login</string>
+    <string name="enterNames">Enter your full Names</string>
+    <string name="address">Enter your Address</string>
+    <string name="save">Save Information</string>
+    <string name="enterEmail">Enter your Email</string>
+    <string name="enterPassword">Enter your Password</string>
 </resources>

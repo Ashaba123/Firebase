@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
+        android:orientation="vertical">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:text="@string/user_register"
+            android:text="@string/userlogin"
             android:layout_gravity="center_horizontal"
             android:layout_margin="50dp"
             />
-
 
 
         <EditText
@@ -28,45 +24,39 @@
             android:layout_margin="15dp"
             android:hint="@string/enterEmail"
             android:inputType="textEmailAddress" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etPasswordLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true">
 
-
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="@string/enterPassword"
-            android:inputType="textPassword"
-            />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="@string/register" />
+            android:text="@string/login" />
 
         <TextView
-            android:id="@+id/textViewSignin"
+            android:id="@+id/textViewSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@string/alreadyReg"
+            android:text="@string/signup"
             android:textAlignment="center" />
 
 
         <ProgressBar
-            android:id="@+id/progress_circular"
+            android:id="@+id/progressBar_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:max="100"/>
 
 
     </LinearLayout>
+
